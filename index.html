@@ -83,7 +83,8 @@
                             <label for="target-freq">Target frequency</label>
                         </div>
                         <div class="col">
-                            <input type="number" class="form-control" id="target-freq" onchange="calculateTbPrd()">
+                            <input class="form-control" id="target-freq" min="0" onchange="calculateTbPrd()"
+                                   type="number">
                         </div>
                         <div class="col">
                             <select name="target-freq-unit" id="target-freq-unit" class="form-control form-select" onchange="calculateTbPrd()">
@@ -110,7 +111,7 @@
                             <label for="tbprd">TBPRD</label>
                         </div>
                         <div class="col">
-                            <input class="form-control" id="tbprd" min="0" name="tbprd" readonly type="number">
+                            <input class="form-control" id="tbprd" name="tbprd" readonly type="number">
                         </div>
                     </div>
                 </div>

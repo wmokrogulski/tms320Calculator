@@ -1,5 +1,6 @@
 const SYS_CLK = 150e6;
 const MAX_16BIT = 65536;
+const PRECISION = 0.1;
 
 function calculateTbClk() {
     var hspclkdiv = parseFloat($('#hspclkdiv').val());
@@ -16,35 +17,46 @@ function calculateTbClk() {
     }
     $('#tbclk').val(tbclk)
 }
-function calculateTbPrd(){
-    var ctrmode=$('#ctrmode').val();
-    var targetFreq=parseFloat($('#target-freq').val());
-    var targetFreqUnit=$('#target-freq-unit').val();
-    var tbclk=parseFloat($('#tbclk').val());
-    var tbclkFreqUnit=$('#tbclk-freq-unit').val();
+function calculateTbPrd() {
+    var ctrmode = $('#ctrmode').val();
+    var targetFreq = parseFloat($('#target-freq').val());
+    var targetFreqUnit = $('#target-freq-unit').val();
+    var tbclk = parseFloat($('#tbclk').val());
+    var tbclkFreqUnit = $('#tbclk-freq-unit').val();
     var tbprd;
+    var tbprdElem;
+    var tbprd_rnd;
     console.log(targetFreqUnit);
-    if(targetFreqUnit==='mhz'){
-        targetFreq*=1e6;
-    } else if(targetFreqUnit==='khz'){
-        targetFreq*=1e3;
+    if (targetFreqUnit === 'mhz') {
+        targetFreq *= 1e6;
+    } else if (targetFreqUnit === 'khz') {
+        targetFreq *= 1e3;
     }
-    if(tbclkFreqUnit==='mhz'){
-        tbclk*=1e6;
-    } else if(tbclkFreqUnit==='khz'){
-        tbclk*=1e3;
+    if (tbclkFreqUnit === 'mhz') {
+        tbclk *= 1e6;
+    } else if (tbclkFreqUnit === 'khz') {
+        tbclk *= 1e3;
     }
 
-    if(ctrmode==='up-down'){
-        tbprd=tbclk/(2*targetFreq);
-    } else{
-        tbprd=(tbclk/targetFreq)-1;
+    if (ctrmode === 'up-down') {
+        tbprd = tbclk / (2 * targetFreq);
+    } else {
+        tbprd = (tbclk / targetFreq) - 1;
     }
-    tbprd=Math.round(tbprd);
-    if(tbprd>MAX_16BIT){
+    tbprd_rnd = Math.round(tbprd);
+    tbprdElem = $('#tbprd');
+    if (tbprd > MAX_16BIT) {
         alert('Calculated value is above maximum value! Try changing the time base.');
-        $('#tbprd').val('');
-    } else{
-        $('#tbprd').val(tbprd);
+        tbprdElem.val('');
+    } else {
+        tbprdElem.val(tbprd_rnd);
+    }
+    if (Math.abs(tbprd - tbprd_rnd) > PRECISION) {
+        tbprdElem.addClass('bg-warning');
+        tbprdElem.attr({'data-bs-toggle': 'tooltip', 'title': 'Value is rounded.'});
+    } else {
+        tbprdElem.removeClass('bg-warning');
+        tbprdElem.removeAttr('data-bs-toggle');
+        tbprdElem.removeAttr('title');
     }
 }

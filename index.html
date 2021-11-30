@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="css/bootstrap-utilities.min.css">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-<div class="container w-50 mx-auto mt-1">
+<div class="container mx-auto mt-1" id="main">
     <div class="card mx-auto">
         <div class="card-body">
             <h2 class="card-title">PWM Calculations</h2>
@@ -100,7 +101,7 @@
                             <select class="form-control form-select" id="ctrmode" name="ctrmode" onchange="calculateTbPrd()">
                                 <option value="up">UP</option>
                                 <option value="down">DOWN</option>
-                                <option value="up-down">UP-DOWN</option>
+                                <option selected value="up-down">UP-DOWN</option>
                             </select>
                         </div>
                     </div>

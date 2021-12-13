@@ -3,8 +3,8 @@ const MAX_16BIT = 65536;
 const PRECISION = 0.1;
 
 function calculateTbClk() {
-    var hspclkdiv = parseFloat($('#hspclkdiv').val());
-    var clkdiv = parseFloat($('#clkdiv').val());
+    var hspclkdiv = parseFloat($('#hspclkdiv').text());
+    var clkdiv = parseFloat($('#clkdiv').text());
     var tbclk = SYS_CLK / (hspclkdiv * clkdiv);
     if (tbclk > 1e6) {
         $('#tbclk-freq-unit').val('mhz');

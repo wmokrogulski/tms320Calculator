@@ -1,3 +1,7 @@
 #main {
     max-width: 1000px;
 }
+
+#board-image {
+    width: 100%;
+}

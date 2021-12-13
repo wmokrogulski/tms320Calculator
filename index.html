@@ -8,123 +8,28 @@
     <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="css/bootstrap-utilities.min.css">
     <link href="css/style.css" rel="stylesheet">
+    <link href="img/favicon.ico" rel="icon">
 </head>
 <body>
-<div class="container mx-auto mt-1" id="main">
-    <div class="card mx-auto">
+<div class="container" id="main">
+    <div class="card">
         <div class="card-body">
-            <h2 class="card-title">PWM Calculations</h2>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">SYS_CLK</div>
-                        <div class="col">150 MHz</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <label for="hspclkdiv">HSPCKLDIV</label>
-                        </div>
-                        <div class="col">
-                            <select name="hspclkdiv" id="hspclkdiv" class="form-control form-select"
-                                    onchange="calculateTbClk(); calculateTbPrd();">
-                                <option value="1">1</option>
-                                <option value="2" selected>2</option>
-                                <option value="4">4</option>
-                                <option value="6">6</option>
-                                <option value="8">8</option>
-                                <option value="10">10</option>
-                                <option value="12">12</option>
-                                <option value="14">14</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label for="clkdiv">CLKDIV</label>
-                        </div>
-                        <div class="col">
-                            <select name="clkdiv" id="clkdiv" class="form-control form-select"
-                                    onchange="calculateTbClk(); calculateTbPrd();">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="4">4</option>
-                                <option value="8">8</option>
-                                <option value="16">16</option>
-                                <option value="32">32</option>
-                                <option value="64">64</option>
-                                <option value="128">128</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="tbclk">TBCLK</label>
-                        </div>
-                        <div class="col">
-                            <input type="number" class="form-control" readonly id="tbclk" name="tbclk">
-                        </div>
-                        <div class="col">
-                            <select name="tbclk-freq-unit" id="tbclk-freq-unit" readonly
-                                    class="form-control form-select">
-                                <option value="hz">Hz</option>
-                                <option value="khz">kHz</option>
-                                <option value="mhz" selected>MHz</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <label for="target-freq">Target frequency</label>
-                        </div>
-                        <div class="col">
-                            <input class="form-control" id="target-freq" min="0" onchange="calculateTbPrd()"
-                                   type="number">
-                        </div>
-                        <div class="col">
-                            <select name="target-freq-unit" id="target-freq-unit" class="form-control form-select" onchange="calculateTbPrd()">
-                                <option value="hz">Hz</option>
-                                <option value="khz" selected>kHz</option>
-                                <option value="mhz">MHz</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="ctrmode">CTRMODE</label>
-                        </div>
-                        <div class="col">
-                            <select class="form-control form-select" id="ctrmode" name="ctrmode" onchange="calculateTbPrd()">
-                                <option value="up">UP</option>
-                                <option value="down">DOWN</option>
-                                <option selected value="up-down">UP-DOWN</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="tbprd">TBPRD</label>
-                        </div>
-                        <div class="col">
-                            <input class="form-control" id="tbprd" name="tbprd" readonly type="number">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="">HOMEPAGE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pwm/">PWM</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="pinout/">PINOUT</a>
+                </li>
+            </ul>
+            <h2 class="card-title mt-1">TMS320 Board</h2>
+            <img alt="TMS320" class="mx-auto" id="board-image" src="img/tms320board.png">
         </div>
     </div>
 </div>
-<script src="js/jquery-3.6.0.min.js" type="text/javascript"></script>
-<script src="js/bootstrap.bundle.min.js" type="text/javascript"></script>
-<script src="js/tms320calc.js" type="text/javascript"></script>
-<script>
-    calculateTbClk();
-    calculateTbPrd();
-</script>
+
 </body>
 </html>

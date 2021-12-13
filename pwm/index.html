@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TMS320 PWM Calculator</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-grid.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-reboot.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-utilities.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../img/favicon.ico" rel="icon">
+</head>
+<body>
+<div class="container mx-auto mt-1" id="main">
+    <div class="card mx-auto">
+        <div class="card-body">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="../">HOMEPAGE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="">PWM</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../pinout/">PINOUT</a>
+                </li>
+            </ul>
+            <h2 class="card-title mt-1">PWM Calculations</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">SYS_CLK</div>
+                        <div class="col">150 MHz</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <label for="pwm-num">PWM</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" id="pwm-num" name="pwm-num" onchange="generateCode()">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="cmp-select">CMP</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" id="cmp-select" name="cmp-select" onchange="changeCmpLabel()">
+                                <option value="CMPA">CMPA</option>
+                                <option value="CMPB">CMPB</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="gpio">GPIO</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-text">GPIO</span>
+                                <input class="form-control" id="gpio" max="64" min="0" name="gpio"
+                                       onchange="generateCode()"
+                                       type="number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <label for="hspclkdiv">HSPCKLDIV</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-control form-select" id="hspclkdiv" name="hspclkdiv"
+                                    onchange="calculateTbClk(); calculateTbPrd();">
+                                <option value="1">1</option>
+                                <option selected value="2">2</option>
+                                <option value="4">4</option>
+                                <option value="6">6</option>
+                                <option value="8">8</option>
+                                <option value="10">10</option>
+                                <option value="12">12</option>
+                                <option value="14">14</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="clkdiv">CLKDIV</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-control form-select" id="clkdiv" name="clkdiv"
+                                    onchange="calculateTbClk(); calculateTbPrd();">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="4">4</option>
+                                <option value="8">8</option>
+                                <option value="16">16</option>
+                                <option value="32">32</option>
+                                <option value="64">64</option>
+                                <option value="128">128</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="tbclk">TBCLK</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                <input class="form-control" id="tbclk" name="tbclk" readonly type="number">
+                                <select class="form-control form-select" id="tbclk-freq-unit" name="tbclk-freq-unit"
+                                        readonly>
+                                    <option value="hz">Hz</option>
+                                    <option value="khz">kHz</option>
+                                    <option selected value="mhz">MHz</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <label for="target-freq">Target frequency</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                <input class="form-control" id="target-freq" min="0" onchange="calculateTbPrd()"
+                                       type="number">
+                                <select class="form-control form-select" id="target-freq-unit" name="target-freq-unit"
+                                        onchange="calculateTbPrd()">
+                                    <option value="hz">Hz</option>
+                                    <option selected value="khz">kHz</option>
+                                    <option value="mhz">MHz</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="ctrmode">CTRMODE</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-control form-select" id="ctrmode" name="ctrmode"
+                                    onchange="calculateTbPrd()">
+                                <option value="0">UP</option>
+                                <option value="1">DOWN</option>
+                                <option selected value="2">UP-DOWN</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="tbprd">TBPRD</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" id="tbprd" name="tbprd" readonly type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" id="duty-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <label for="duty">Duty</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                <input class="form-control" id="duty" max="100" min="0" onchange="calculateCmp()"
+                                       step="0.1"
+                                       type="number">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="cmp" id="cmp-label">CMPA</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" id="cmp" name="cmp" readonly type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" id="code-card">
+                <div class="card-body">
+                    <div id="code"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery-3.6.0.min.js" type="text/javascript"></script>
+<script src="../js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="../js/pwmCodeGeneration.js" type="text/javascript"></script>
+<script src="../js/pwmTms320calc.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+<script>
+    $('#duty-card').hide();
+    $('#code-card').hide();
+    calculateTbClk();
+    calculateTbPrd();
+</script>
+</body>
+</html>

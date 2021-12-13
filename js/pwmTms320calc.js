@@ -16,7 +16,9 @@ function calculateTbClk() {
         $('#tbclk-freq-unit').val('hz');
     }
     $('#tbclk').val(tbclk)
+    generateCode();
 }
+
 function calculateTbPrd() {
     var ctrmode = $('#ctrmode').val();
     var targetFreq = parseFloat($('#target-freq').val());
@@ -25,7 +27,8 @@ function calculateTbPrd() {
     var tbclkFreqUnit = $('#tbclk-freq-unit').val();
     var tbprd;
     var tbprdElem;
-    var tbprd_rnd;
+    var dutyElem;
+    var tbprdRnd;
     console.log(targetFreqUnit);
     if (targetFreqUnit === 'mhz') {
         targetFreq *= 1e6;
@@ -38,20 +41,20 @@ function calculateTbPrd() {
         tbclk *= 1e3;
     }
 
-    if (ctrmode === 'up-down') {
+    if (ctrmode === '2') {
         tbprd = tbclk / (2 * targetFreq);
     } else {
         tbprd = (tbclk / targetFreq) - 1;
     }
-    tbprd_rnd = Math.round(tbprd);
+    tbprdRnd = Math.round(tbprd);
     tbprdElem = $('#tbprd');
     if (tbprd > MAX_16BIT) {
         alert('Calculated value is above maximum value! Try changing the time base.');
         tbprdElem.val('');
     } else {
-        tbprdElem.val(tbprd_rnd);
+        tbprdElem.val(tbprdRnd);
     }
-    if (Math.abs(tbprd - tbprd_rnd) > PRECISION) {
+    if (Math.abs(tbprd - tbprdRnd) > PRECISION) {
         tbprdElem.addClass('bg-warning');
         tbprdElem.attr({'data-bs-toggle': 'tooltip', 'title': 'Value is rounded.'});
     } else {
@@ -59,4 +62,26 @@ function calculateTbPrd() {
         tbprdElem.removeAttr('data-bs-toggle');
         tbprdElem.removeAttr('title');
     }
+    dutyElem = $('#duty-card');
+    if (tbprdElem.val() !== '') {
+        dutyElem.show();
+        generateCode();
+    }
+}
+
+function calculateCmp() {
+    var cmpElem = $('#cmp');
+    var duty = parseFloat($('#duty').val());
+    var tbprd = $('#tbprd').val();
+    var cmp = Math.round(duty / 100 * tbprd);
+    cmpElem.val(cmp)
+    generateCode();
+}
+
+
+function changeCmpLabel() {
+    var cmpChannel = $('#cmp-select').val();
+    var cmpElem = $('#cmp-label');
+    cmpElem.text(cmpChannel);
+    generateCode();
 }

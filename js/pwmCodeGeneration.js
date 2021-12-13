@@ -2,12 +2,14 @@ function generateCode() {
     $('#code-card').show();
     clearCode();
     addCodeTitle();
+    writeEallow()
     setCtrMode();
     setHspClkDiv();
     setClkDiv();
     setAction();
     setTbPrd();
-    setCmp()
+    setCmp();
+    writeEdis();
 }
 
 function getPwmChannel() {
@@ -34,6 +36,14 @@ function addCodeLine(code) {
     var codeElem = $('#code');
     codeLine = $('<code></code><br>').text(code);
     codeElem.append(codeLine);
+}
+
+function writeEallow() {
+    addCodeLine('EALLOW;');
+}
+
+function writeEdis() {
+    addCodeLine('EDIS;');
 }
 
 function setCtrMode() {
